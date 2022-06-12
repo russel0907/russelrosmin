@@ -168,7 +168,7 @@ img {
 -----------------------------------------*/
 .custom-navbar {
     margin-bottom: 0;
-    background-color: #000000;
+    background-color: #0B0C10;
 }
 
 .navbar-fixed-top {
@@ -193,7 +193,7 @@ img {
     text-transform: uppercase;
     transition: all 0.4s ease-in-out;
     padding: 15px 23px;
-    font-size: 1.2em;
+    font-size: 0.9em;
 }
 
 .custom-navbar .nav.th li a {
@@ -210,13 +210,13 @@ img {
     padding: 7px;
 }
 
-.custom-navbar .navbar-brand span {
-    background: url("../images/pubg-logo.png") no-repeat;
+/* .custom-navbar .navbar-brand span {
+    background: url("/images/logo.png") no-repeat;
     background-size: contain;
     display: block;
     height: 100%;
     width: 2em;
-}
+} */
 
 
 .custom-navbar .nav li .button {
@@ -261,8 +261,8 @@ img {
 
 .custom-navbar .nav li a:hover {
     background: transparent;
-    color: #FFBD14;
-    border-bottom: 5px solid #FFBD14
+    color: #45A29E;
+    border-bottom: 5px solid #45A29E
 }
 
 .custom-navbar .navbar-nav>li>a:hover,
@@ -272,7 +272,7 @@ img {
 
 .custom-navbar .nav li.active>a {
     background-color: transparent;
-    border-bottom: 5px solid #FFBD14;
+    border-bottom: 5px solid #45A29E;
 }
 
 .custom-navbar .navbar-toggle {
@@ -343,7 +343,7 @@ img {
 
 #landing a {
     font-family: 'Teko', sans-serif;
-    color: #16328b;
+    color: #45A29E;
     font-size: 2em;
     text-transform: uppercase;
 }
@@ -375,9 +375,10 @@ img {
     HOME section
 -----------------------------------------*/
 #home {
-    background: url('/images/intro-bg.png') fixed top center;
+    background: url('/images/hero-bg-2.png') fixed top center;
     -webkit-background-size: cover;
-    background-size: cover;
+    background-color: #0B0C10;
+    background-size: contain;
     color: #ffffff;
     text-align: center;
 }
@@ -424,8 +425,8 @@ img {
 }
 
 #overview .myImage {
-    background: url('/images/bg-4-update.png') no-repeat top center;
-    margin-top: -11em;
+    background: url('/images/bg-4-update-5.png') no-repeat top center;
+    margin-top: -19em;
     background-size: cover;
 }
 
@@ -469,9 +470,9 @@ img {
 -----------------------------------------*/
 
 #prize .myImage {
-    background: url('/images/bg-4-down.png') no-repeat top center;
+    background: url('/images/bg-4-down-5.png') no-repeat top center;
     background-size: cover;
-    margin-top: -1em;
+    margin-top: -21em;
 }
 
 #prize .container {
@@ -633,9 +634,9 @@ img {
 
 
 #schedule .myImage {
-    background: url('/images/bg-5.png') no-repeat top center;
+    background: url('/images/bg-5-2.png') no-repeat top center;
     background-size: cover;
-    margin-top: -1em;
+    margin-top: -21em;
 }
 
 #schedule .button {
@@ -972,7 +973,7 @@ footer .img-responsive.vn {
     }
 
     #home {
-        background: url('../images/header-mobile.jpg') top center;
+        background: url('/images/hero-bg.png') top center;
         -webkit-background-size: cover;
         background-size: cover;
         color: #ffffff;
@@ -1229,9 +1230,7 @@ footer .img-responsive.vn {
 
 
 @media (min-width: 992px) {
-    .container {
-        width: 750px;
-    }
+    .container {}
 
     #overview .container {
         padding: 11em 0 12em 0;
@@ -1538,4 +1537,24 @@ footer .img-responsive.vn {
     #prize .container {
         padding: 12em 0 55em 0;
     }
+}
+
+.pad-top-50vh {
+    padding-top: 50vh;
+}
+
+.pad-bot-50vh {
+    padding-bottom: 50vh;
+}
+
+.pad-bot-25vh {
+    padding-bottom: 25vh;
+}
+
+.pad-top-15vh {
+    padding-top: 15vh;
+}
+
+.pad-bot-15vh {
+    padding-bottom: 15vh;
 }
