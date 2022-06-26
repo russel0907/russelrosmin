@@ -74,8 +74,6 @@ a:hover {
   } 
 }
 
-
-
 .unslate_co--site-inner {
   margin-bottom: 400px;
   position: relative;
@@ -1291,6 +1289,13 @@ a:hover {
 .lead {
   font-size: 18px;
   line-height: 30px;
+}
+
+@media (max-width: 991px) {
+  .lead{
+    font-size: 16px;
+    line-height: 30px;
+  }
 }
 
 .relative {
