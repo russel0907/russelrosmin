@@ -901,6 +901,14 @@ a:hover {
   }
 }
 
+#home-section{
+  background-image: url("/images/header.jpg");
+}
+
+.text-shadow{
+  text-shadow: 2px 4px 3px rgba(0,0,0,0.3);
+}
+
 .mouse-wrap {
   position: relative;
   display: inline-block;
