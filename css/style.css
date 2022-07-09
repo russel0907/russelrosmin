@@ -2368,6 +2368,18 @@ span.error {
   .single-timeline-area .single-timeline-content {
       padding: 20px;
   }
+  .single-timeline-area .single-timeline-content {
+    background: #2b2b2b 0% 0% no-repeat padding-box;;
+    position: relative;
+    z-index: 1;
+    opacity: 1;
+    padding: 30px 30px 25px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    margin-top: 15px;
+    -webkit-box-shadow: 0rem 0rem 0rem 0 rgba(255, 255, 255, 0.852);
+    box-shadow: 0px 0px 0px #2b2b2b;
+  }
 }
 .single-timeline-area .single-timeline-content .timeline-icon {
   -webkit-transition-duration: 500ms;
