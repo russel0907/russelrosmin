@@ -1,0 +1,625 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <title>Resume | Russel Rosmin</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="shortcut icon" href="images/favicon.svg" type="Icon">
+
+  <!-- Style Plugins -->
+  <link rel="stylesheet" href="css/vendor/icomoon/style.css">
+  <link rel="stylesheet" href="css/vendor/owl.carousel.min.css">
+  <link rel="stylesheet" href="css/vendor/animate.min.css">
+  <link rel="stylesheet" href="css/vendor/aos.css">
+  <link rel="stylesheet" href="css/vendor/bootstrap.min.css">
+  <link rel="stylesheet" href="css/vendor/jquery.fancybox.min.css">
+
+  <!-- Main Style -->
+  <link rel="stylesheet" href="css/style.css">
+
+  <style>
+    /* ── Page Background ── */
+    body {
+      background: #0d0d0d !important;
+    }
+
+    /* ── Document Wrapper ── */
+    .resume-page {
+      padding: 60px 0;
+    }
+
+    .resume-document {
+      max-width: 900px;
+      margin: 0 auto;
+      background: #ffffff;
+      color: #222;
+      border-radius: 4px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+      overflow: hidden;
+    }
+
+    /* ── Header Section ── */
+    .resume-header {
+      background: #1a1a2e;
+      color: #fff;
+      padding: 45px 50px 35px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .resume-header .name-title h1 {
+      font-size: 2.2rem;
+      font-weight: 700;
+      margin: 0 0 4px;
+      letter-spacing: 0.5px;
+    }
+
+    .resume-header .name-title .title {
+      font-size: 1rem;
+      opacity: 0.8;
+      font-weight: 400;
+    }
+
+    .resume-header .contact-info {
+      text-align: right;
+      font-size: 0.85rem;
+      line-height: 1.8;
+    }
+
+    .resume-header .contact-info a {
+      color: #a8b2d1;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .resume-header .contact-info a:hover {
+      color: #fff;
+    }
+
+    /* ── Body ── */
+    .resume-body {
+      padding: 35px 50px 40px;
+    }
+
+    /* ── Section Titles ── */
+    .doc-section-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: #1a1a2e;
+      border-bottom: 2px solid #1a1a2e;
+      padding-bottom: 6px;
+      margin-bottom: 18px;
+    }
+
+    /* ── Summary ── */
+    .summary-text {
+      font-size: 0.92rem;
+      line-height: 1.7;
+      color: #444;
+      margin-bottom: 28px;
+    }
+
+    /* ── Entry (Experience / Education) ── */
+    .entry {
+      margin-bottom: 22px;
+    }
+
+    .entry:last-child {
+      margin-bottom: 0;
+    }
+
+    .entry-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 4px;
+    }
+
+    .entry-header h4 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #1a1a2e;
+      margin: 0;
+    }
+
+    .entry-header .entry-date {
+      font-size: 0.82rem;
+      color: #888;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+
+    .entry-sub {
+      font-size: 0.85rem;
+      color: #666;
+      font-weight: 500;
+      margin-bottom: 6px;
+    }
+
+    .entry ul {
+      padding-left: 18px;
+      margin: 0;
+    }
+
+    .entry ul li {
+      font-size: 0.88rem;
+      color: #444;
+      line-height: 1.65;
+      margin-bottom: 3px;
+    }
+
+    /* ── Skills ── */
+    .skills-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px 0;
+    }
+
+    .skills-grid .skill-cat {
+      flex: 0 0 120px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #1a1a2e;
+    }
+
+    .skills-grid .skill-items {
+      flex: 1;
+      font-size: 0.88rem;
+      color: #444;
+      line-height: 1.7;
+    }
+
+    /* ── Projects ── */
+    .project-item {
+      margin-bottom: 14px;
+    }
+
+    .project-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .project-item h5 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #1a1a2e;
+      margin: 0 0 2px;
+    }
+
+    .project-item .project-role {
+      font-size: 0.82rem;
+      color: #888;
+      font-weight: 500;
+      margin-bottom: 4px;
+    }
+
+    .project-item p {
+      font-size: 0.88rem;
+      color: #444;
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    /* ── Buttons ── */
+    .resume-actions {
+      text-align: center;
+      padding: 0 50px 40px;
+    }
+
+    .resume-actions .btn {
+      font-size: 0.9rem;
+      padding: 10px 28px;
+    }
+
+    /* ── Print Styles ── */
+    @media print {
+      .unslate_co--site-nav,
+      .unslate_co--site-mobile-menu,
+      .unslate_co--footer,
+      #unslate_co--overlayer,
+      .site-loader-wrap,
+      .resume-actions {
+        display: none !important;
+      }
+      .resume-page { padding: 0; }
+      .resume-document { box-shadow: none; border-radius: 0; }
+      .resume-header { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    }
+
+    @media (max-width: 768px) {
+      .resume-header { padding: 30px 25px; flex-direction: column; }
+      .resume-header .contact-info { text-align: left; }
+      .resume-body { padding: 25px; }
+      .resume-actions { padding: 0 25px 30px; }
+      .entry-header { flex-direction: column; }
+    }
+  </style>
+</head>
+
+<body data-spy="scroll" data-target=".site-nav-target" data-offset="200">
+
+  <nav class="unslate_co--site-mobile-menu">
+    <div class="close-wrap d-flex">
+      <a href="#" class="d-flex ml-auto js-menu-toggle">
+        <span class="close-label">Close</span>
+        <div class="close-times">
+          <span class="bar1"></span>
+          <span class="bar2"></span>
+        </div>
+      </a>
+    </div>
+    <div class="site-mobile-inner"></div>
+  </nav>
+
+  <div class="unslate_co--site-wrap">
+    <div class="unslate_co--site-inner">
+      <nav class="unslate_co--site-nav site-nav-target" id="nav-bar">
+        <div class="container">
+          <div class="row align-items-center justify-content-between text-left">
+            <div class="col-md-5 text-right">
+              <ul class="site-nav-ul js-clone-nav text-left d-none d-lg-inline-block">
+                <li><a href="index.html#home-section" class="nav-link">Home</a></li>
+                <li><a href="index.html#about-section" class="nav-link">About</a></li>
+                <li><a href="index.html#work-section" class="nav-link">Work</a></li>
+              </ul>
+            </div>
+            <div class="site-logo pos-absolute">
+              <a href="index.html" class="unslate_co--site-logo">Russel<span></span></a>
+            </div>
+            <div class="col-md-5 text-right text-lg-left">
+              <ul class="site-nav-ul js-clone-nav text-left d-none d-lg-inline-block">
+                <li><a href="index.html#achievement-section" class="nav-link">Achievement</a></li>
+                <li><a href="index.html#intern-section" class="nav-link">Intern</a></li>
+                <li><a href="index.html#contact-section" class="nav-link">Contact</a></li>
+              </ul>
+              <ul class="site-nav-ul-none-onepage text-right d-inline-block d-lg-none">
+                <li><a href="#" class="js-menu-toggle">Menu</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      <!-- ── RESUME PAGE ── -->
+      <div class="resume-page">
+        <div class="container">
+          <div class="resume-document">
+
+            <!-- Header -->
+            <div class="resume-header">
+              <div class="name-title">
+                <h1>Russel Rosmin</h1>
+                <div class="title">Front-End Developer & UI/UX Designer</div>
+              </div>
+              <div class="contact-info">
+                <a href="https://www.russel7ras@gmail.com">russel7ras@gmail.com</a><br>
+                <a href="https://wa.link/101hoy">011 3923 8740</a><br>
+                <a href="https://www.linkedin.com/in/russel-rosmin/" target="_blank">linkedin.com/in/russel-rosmin</a><br>
+                Kudat, Sabah, Malaysia
+              </div>
+            </div>
+
+            <!-- Body -->
+            <div class="resume-body">
+
+              <!-- Professional Summary -->
+              <h2 class="doc-section-title">Professional Summary</h2>
+              <p class="summary-text">
+                Enthusiastic Front-End Developer and UI/UX Designer with a strong passion for creating visually stunning and user-friendly digital experiences. Experienced in Flutter mobile app development, web development, and design direction. Adept at collaborating with cross-functional teams to deliver high-quality products that exceed user expectations.
+              </p>
+
+              <!-- Skills -->
+              <h2 class="doc-section-title">Skills</h2>
+              <div class="skills-grid mb-4">
+                <span class="skill-cat">Technical:</span>
+                <span class="skill-items">Flutter, Dart, HTML5, CSS3, JavaScript, Bootstrap, SCSS, Figma, Adobe XD, UI/UX Design, QR Code Integration, API Integration, Git</span>
+              </div>
+              <div class="skills-grid mb-4">
+                <span class="skill-cat">Soft Skills:</span>
+                <span class="skill-items">Problem Solving, Team Collaboration, Attention to Detail, Creative Thinking, Time Management</span>
+              </div>
+
+              <!-- Work Experience -->
+              <h2 class="doc-section-title">Work Experience</h2>
+
+              <div class="entry">
+                <div class="entry-header">
+                  <h4>Front-End Flutter Developer</h4>
+                  <span class="entry-date">2022 &ndash; Present</span>
+                </div>
+                <div class="entry-sub">Phi Software Company</div>
+                <ul>
+                  <li>Developed and maintained Flutter applications for major clients including Bank Islam, BSN, and DBKK</li>
+                  <li>Implemented DuitNow QR Scanner and QR Payment modules for banking applications</li>
+                  <li>Enhanced UI/UX for intuitive user experiences across multiple mobile apps</li>
+                  <li>Integrated REST APIs for seamless data retrieval and display</li>
+                  <li>Conducted thorough testing to ensure bug-free performance</li>
+                </ul>
+              </div>
+
+              <div class="entry">
+                <div class="entry-header">
+                  <h4>Web Developer & Designer (Intern)</h4>
+                  <span class="entry-date">2021 &ndash; 2022</span>
+                </div>
+                <div class="entry-sub">Phi Software Company</div>
+                <ul>
+                  <li>Designed and developed responsive websites for various clients (Toursbloom, LinkExpres, Assetsware, etc.)</li>
+                  <li>Created branding materials including company profiles, brochures, and logos</li>
+                  <li>Collaborated with the design team to produce mockups and UI prototypes</li>
+                  <li>Contributed to the development of web-based management systems</li>
+                </ul>
+              </div>
+
+              <!-- Education -->
+              <h2 class="doc-section-title">Education</h2>
+
+              <div class="entry">
+                <div class="entry-header">
+                  <h4>Bachelor of Computer Science</h4>
+                  <span class="entry-date">2018 &ndash; 2022</span>
+                </div>
+                <div class="entry-sub">Universiti Malaysia Sabah Labuan International Campus (UMSLIC)</div>
+                <ul>
+                  <li>Major in Computer Science &mdash; CGPA: 3.45 / 4.00</li>
+                  <li>Dean's List Award (4 Semesters)</li>
+                </ul>
+              </div>
+
+              <div class="entry">
+                <div class="entry-header">
+                  <h4>Matriculation (Science)</h4>
+                  <span class="entry-date">2017 &ndash; 2018</span>
+                </div>
+                <div class="entry-sub">Labuan Matriculation College (LMC)</div>
+                <ul>
+                  <li>Module 2: Chemistry, Mathematics, Physics & Computer Science &mdash; CGPA: 3.71 / 4.00</li>
+                </ul>
+              </div>
+
+              <!-- Key Projects -->
+              <h2 class="doc-section-title">Key Projects</h2>
+
+              <div class="project-item">
+                <h5>Bank Islam Flutter App</h5>
+                <div class="project-role">Front-End Developer</div>
+                <p>Developed Flutter app for Bank Islam integrating DuitNow QR Scanner and QR Payment features. Enhanced UI/UX for intuitive user experience and conducted testing for bug-free performance.</p>
+              </div>
+
+              <div class="project-item">
+                <h5>BSN Flutter App</h5>
+                <div class="project-role">Front-End Developer</div>
+                <p>Created innovative UI for QR code functionality including scanner and payment features. Integrated API to retrieve QR codes for display within the application.</p>
+              </div>
+
+              <div class="project-item">
+                <h5>DBKK Multi-App Project</h5>
+                <div class="project-role">Front-End Developer</div>
+                <p>Worked on DBKK-USER-APP, DBKK-ENFORCEMENT-APP, and DBKK-MERCHANT-APP. Ensured smooth location features, streamlined enforcement data functions, and organized merchant data display.</p>
+              </div>
+
+              <div class="project-item">
+                <h5>Gamified Sabah Tourism Mobile Application (FYP)</h5>
+                <div class="project-role">Final Year Project</div>
+                <p>Developed a gamified mobile application to promote tourism in Sabah through interactive experiences and engaging gameplay elements.</p>
+              </div>
+
+            </div>
+
+            <!-- Actions -->
+            <div class="resume-actions">
+              <a href="/file/RUSSEL ROSMIN RESUME 2024.pdf" class="btn btn-outline-pill btn-custom-light" download="cv" style="color:#1a1a2e; border-color:#1a1a2e;">Download PDF Resume</a>
+              <a href="index.html" class="btn btn-outline-pill btn-custom-light ml-3" style="color:#1a1a2e; border-color:#1a1a2e;">Back to Home</a>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="unslate_co--footer unslate_co--section">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-md-7">
+            <ul class="footer-site-social">
+              <li><a href="https://www.facebook.com/russelrosmin.7999/">Facebook</a></li>
+              <li><a href="https://www.instagram.com/russel_7999/">Instagram</a></li>
+              <li><a href="https://www.linkedin.com/in/russel-rosmin/">Linkedin</a></li>
+            </ul>
+            <p class="site-copyright">
+              Copyright &copy; Russel Rosmin
+              <script>
+                document.write(new Date().getFullYear());
+              </script>
+            </p>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Loader -->
+  <div id="unslate_co--overlayer"></div>
+  <div class="site-loader-wrap">
+    <div class="site-loader"></div>
+  </div>
+
+  <script src="js/scripts-dist.js"></script>
+  <script src="js/main.js"></script>
+
+  <!-- ── Dynamic Resume Loader ── -->
+  <script>
+    // Fetch resume data from JSON and render it dynamically
+    // This allows the resume to update when the JSON file changes
+    (function() {
+      fetch('data/resume.json')
+        .then(res => {
+          if (!res.ok) throw new Error('Could not load resume data');
+          return res.json();
+        })
+        .then(data => {
+          if (!data || !data.personal) return;
+
+          // Update header
+          const nameEl = document.querySelector('.resume-header .name-title h1');
+          const titleEl = document.querySelector('.resume-header .name-title .title');
+          if (nameEl) nameEl.textContent = data.personal.name;
+          if (titleEl) titleEl.textContent = data.personal.title;
+
+          // Update contact info
+          const contactEl = document.querySelector('.resume-header .contact-info');
+          if (contactEl && data.personal.email) {
+            contactEl.innerHTML = `
+              <a href="mailto:${data.personal.email}">${data.personal.email}</a><br>
+              <a href="https://wa.link/101hoy">${data.personal.phone || ''}</a><br>
+              <a href="${data.personal.linkedin || '#'}" target="_blank">${(data.personal.linkedin || '').replace('https://www.', '')}</a><br>
+              ${data.personal.location || ''}
+            `;
+          }
+
+          // Update summary
+          const summaryEl = document.querySelector('.summary-text');
+          if (summaryEl && data.summary) summaryEl.textContent = data.summary;
+
+          // Update skills
+          const skillCats = document.querySelectorAll('.skills-grid');
+          if (skillCats.length >= 2) {
+            const techItems = skillCats[0].querySelector('.skill-items');
+            const softItems = skillCats[1].querySelector('.skill-items');
+            if (techItems && data.skills.technical) techItems.textContent = data.skills.technical;
+            if (softItems && data.skills.soft) softItems.textContent = data.skills.soft;
+          }
+
+          // Update experience
+          const expEntries = document.querySelectorAll('.resume-body .entry');
+          if (data.experience && data.experience.length > 0) {
+            // Find the experience section heading
+            const headings = document.querySelectorAll('.doc-section-title');
+            let expHeading = null;
+            let eduHeading = null;
+            headings.forEach(h => {
+              if (h.textContent.includes('Work Experience')) expHeading = h;
+              if (h.textContent.includes('Education')) eduHeading = h;
+            });
+
+            if (expHeading) {
+              // Remove old experience entries (between Work Experience and Education headings)
+              let next = expHeading.nextElementSibling;
+              const toRemove = [];
+              while (next && next !== eduHeading) {
+                toRemove.push(next);
+                next = next.nextElementSibling;
+              }
+              toRemove.forEach(el => el.remove());
+
+              // Insert new experience entries
+              data.experience.forEach(exp => {
+                const entry = document.createElement('div');
+                entry.className = 'entry';
+                entry.innerHTML = `
+                  <div class="entry-header">
+                    <h4>${escapeHtml(exp.title)}</h4>
+                    <span class="entry-date">${escapeHtml(exp.date)}</span>
+                  </div>
+                  <div class="entry-sub">${escapeHtml(exp.company)}</div>
+                  <ul>
+                    ${exp.bullets.map(b => `<li>${escapeHtml(b)}</li>`).join('')}
+                  </ul>
+                `;
+                expHeading.parentNode.insertBefore(entry, eduHeading || null);
+              });
+            }
+          }
+
+          // Update education
+          if (data.education && data.education.length > 0) {
+            const headings = document.querySelectorAll('.doc-section-title');
+            let eduHeading = null;
+            let projHeading = null;
+            headings.forEach(h => {
+              if (h.textContent.includes('Education')) eduHeading = h;
+              if (h.textContent.includes('Key Projects')) projHeading = h;
+            });
+
+            if (eduHeading) {
+              let next = eduHeading.nextElementSibling;
+              const toRemove = [];
+              while (next && next !== projHeading) {
+                toRemove.push(next);
+                next = next.nextElementSibling;
+              }
+              toRemove.forEach(el => el.remove());
+
+              data.education.forEach(edu => {
+                const entry = document.createElement('div');
+                entry.className = 'entry';
+                entry.innerHTML = `
+                  <div class="entry-header">
+                    <h4>${escapeHtml(edu.degree)}</h4>
+                    <span class="entry-date">${escapeHtml(edu.date)}</span>
+                  </div>
+                  <div class="entry-sub">${escapeHtml(edu.school)}</div>
+                  <ul>
+                    ${edu.bullets.map(b => `<li>${escapeHtml(b)}</li>`).join('')}
+                  </ul>
+                `;
+                eduHeading.parentNode.insertBefore(entry, projHeading || null);
+              });
+            }
+          }
+
+          // Update projects
+          if (data.projects && data.projects.length > 0) {
+            const headings = document.querySelectorAll('.doc-section-title');
+            let projHeading = null;
+            headings.forEach(h => {
+              if (h.textContent.includes('Key Projects')) projHeading = h;
+            });
+
+            if (projHeading) {
+              let next = projHeading.nextElementSibling;
+              const toRemove = [];
+              while (next && next.classList.contains('project-item')) {
+                toRemove.push(next);
+                next = next.nextElementSibling;
+              }
+              toRemove.forEach(el => el.remove());
+
+              data.projects.forEach(proj => {
+                const item = document.createElement('div');
+                item.className = 'project-item';
+                item.innerHTML = `
+                  <h5>${escapeHtml(proj.name)}</h5>
+                  <div class="project-role">${escapeHtml(proj.role)}</div>
+                  <p>${escapeHtml(proj.description)}</p>
+                `;
+                projHeading.parentNode.insertBefore(item, projHeading.nextElementSibling);
+              });
+            }
+          }
+        })
+        .catch(err => {
+          console.log('Resume data loaded from static HTML (JSON not available)');
+        });
+
+      function escapeHtml(str) {
+        if (!str) return '';
+        const div = document.createElement('div');
+        div.textContent = str;
+        return div.innerHTML;
+      }
+    })();
+  </script>
+
+</body>
+
+</html>

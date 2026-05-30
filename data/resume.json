@@ -1,0 +1,81 @@
+{
+  "personal": {
+    "name": "Russel Rosmin",
+    "title": "Front-End Developer & UI/UX Designer",
+    "email": "russel7ras@gmail.com",
+    "phone": "011 3923 8740",
+    "linkedin": "https://www.linkedin.com/in/russel-rosmin/",
+    "location": "Kudat, Sabah, Malaysia"
+  },
+  "summary": "Enthusiastic Front-End Developer and UI/UX Designer with a strong passion for creating visually stunning and user-friendly digital experiences. Experienced in Flutter mobile app development, web development, and design direction. Adept at collaborating with cross-functional teams to deliver high-quality products that exceed user expectations.",
+  "skills": {
+    "technical": "Flutter, Dart, HTML5, CSS3, JavaScript, Bootstrap, SCSS, Figma, Adobe XD, UI/UX Design, QR Code Integration, API Integration, Git",
+    "soft": "Problem Solving, Team Collaboration, Attention to Detail, Creative Thinking, Time Management"
+  },
+  "experience": [
+    {
+      "title": "Front-End Flutter Developer",
+      "date": "2022 \u2013 Present",
+      "company": "Phi Software Company",
+      "bullets": [
+        "Developed and maintained Flutter applications for major clients including Bank Islam, BSN, and DBKK",
+        "Implemented DuitNow QR Scanner and QR Payment modules for banking applications",
+        "Enhanced UI/UX for intuitive user experiences across multiple mobile apps",
+        "Integrated REST APIs for seamless data retrieval and display",
+        "Conducted thorough testing to ensure bug-free performance"
+      ]
+    },
+    {
+      "title": "Web Developer & Designer (Intern)",
+      "date": "2021 \u2013 2022",
+      "company": "Phi Software Company",
+      "bullets": [
+        "Designed and developed responsive websites for various clients (Toursbloom, LinkExpres, Assetsware, etc.)",
+        "Created branding materials including company profiles, brochures, and logos",
+        "Collaborated with the design team to produce mockups and UI prototypes",
+        "Contributed to the development of web-based management systems"
+      ]
+    }
+  ],
+  "education": [
+    {
+      "degree": "Bachelor of Computer Science",
+      "date": "2018 \u2013 2022",
+      "school": "Universiti Malaysia Sabah Labuan International Campus (UMSLIC)",
+      "bullets": [
+        "Major in Computer Science \u2014 CGPA: 3.45 / 4.00",
+        "Dean's List Award (4 Semesters)"
+      ]
+    },
+    {
+      "degree": "Matriculation (Science)",
+      "date": "2017 \u2013 2018",
+      "school": "Labuan Matriculation College (LMC)",
+      "bullets": [
+        "Module 2: Chemistry, Mathematics, Physics & Computer Science \u2014 CGPA: 3.71 / 4.00"
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Bank Islam Flutter App",
+      "role": "Front-End Developer",
+      "description": "Developed Flutter app for Bank Islam integrating DuitNow QR Scanner and QR Payment features. Enhanced UI/UX for intuitive user experience and conducted testing for bug-free performance."
+    },
+    {
+      "name": "BSN Flutter App",
+      "role": "Front-End Developer",
+      "description": "Created innovative UI for QR code functionality including scanner and payment features. Integrated API to retrieve QR codes for display within the application."
+    },
+    {
+      "name": "DBKK Multi-App Project",
+      "role": "Front-End Developer",
+      "description": "Worked on DBKK-USER-APP, DBKK-ENFORCEMENT-APP, and DBKK-MERCHANT-APP. Ensured smooth location features, streamlined enforcement data functions, and organized merchant data display."
+    },
+    {
+      "name": "Gamified Sabah Tourism Mobile Application (FYP)",
+      "role": "Final Year Project",
+      "description": "Developed a gamified mobile application to promote tourism in Sabah through interactive experiences and engaging gameplay elements."
+    }
+  ]
+}

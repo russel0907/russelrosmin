@@ -1,0 +1,916 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <title>Admin Dashboard | Russel Rosmin</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="shortcut icon" href="images/favicon.svg" type="Icon">
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+  <style>
+    :root {
+      --primary: #1a1a2e;
+      --primary-light: #2d2d4e;
+      --accent: #e94560;
+      --bg: #f0f2f5;
+      --card-bg: #ffffff;
+      --text: #333;
+      --text-light: #888;
+      --border: #e0e0e0;
+      --success: #28a745;
+      --warning: #ffc107;
+      --danger: #dc3545;
+      --shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    .dashboard { display: flex; min-height: 100vh; }
+
+    .sidebar {
+      width: 200px;
+      background: var(--primary);
+      color: #fff;
+      padding: 20px 0;
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      overflow-y: auto;
+      z-index: 100;
+    }
+
+    .sidebar-brand {
+      padding: 0 20px 20px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      margin-bottom: 10px;
+    }
+
+    .sidebar-brand h2 { font-size: 1.1rem; }
+    .sidebar-brand small { font-size: 0.7rem; opacity: 0.6; }
+
+    .sidebar-nav { list-style: none; padding: 0; }
+
+    .sidebar-nav li a {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 20px;
+      color: rgba(255,255,255,0.7);
+      text-decoration: none;
+      font-size: 0.82rem;
+      transition: all 0.2s;
+    }
+
+    .sidebar-nav li a:hover,
+    .sidebar-nav li a.active {
+      background: rgba(255,255,255,0.1);
+      color: #fff;
+    }
+
+    .main-content {
+      margin-left: 200px;
+      flex: 1;
+      padding: 24px 30px;
+      max-width: 100%;
+    }
+
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .top-bar h1 { font-size: 1.3rem; }
+    .user-info { font-size: 0.82rem; color: var(--text-light); }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: 10px;
+      box-shadow: var(--shadow);
+      margin-bottom: 20px;
+      overflow: hidden;
+    }
+
+    .card-header {
+      padding: 14px 20px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .card-header h3 { font-size: 0.95rem; }
+
+    .card-body { padding: 20px; }
+
+    .form-group { margin-bottom: 14px; }
+
+    .form-group label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin-bottom: 4px;
+      color: #555;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 9px 12px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: 0.88rem;
+      font-family: inherit;
+      transition: border-color 0.2s;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+
+    .form-row {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .form-row .form-group {
+      flex: 1;
+      min-width: 180px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 18px;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-primary { background: var(--primary); color: #fff; }
+    .btn-primary:hover { background: var(--primary-light); }
+    .btn-success { background: var(--success); color: #fff; }
+    .btn-success:hover { opacity: 0.9; }
+    .btn-accent { background: var(--accent); color: #fff; }
+    .btn-accent:hover { opacity: 0.9; }
+    .btn-outline {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text);
+    }
+    .btn-outline:hover { border-color: var(--primary); color: var(--primary); }
+    .btn-sm { padding: 5px 12px; font-size: 0.78rem; }
+
+    .entry-item {
+      background: #f8f9fa;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px;
+      margin-bottom: 10px;
+      position: relative;
+    }
+
+    .remove-btn {
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      background: var(--danger);
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 3px 8px;
+      font-size: 0.7rem;
+      cursor: pointer;
+      opacity: 0.7;
+      transition: opacity 0.2s;
+    }
+
+    .remove-btn:hover { opacity: 1; }
+
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      padding: 12px 20px;
+      border-radius: 10px;
+      color: #fff;
+      font-size: 0.85rem;
+      font-weight: 500;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+      transform: translateY(20px);
+      opacity: 0;
+      transition: all 0.3s ease;
+      z-index: 9999;
+    }
+
+    .toast.show { transform: translateY(0); opacity: 1; }
+    .toast.success { background: var(--success); }
+    .toast.error { background: var(--danger); }
+    .toast.info { background: var(--primary); }
+
+    .csv-upload-area {
+      border: 2px dashed var(--border);
+      border-radius: 10px;
+      padding: 30px 20px;
+      text-align: center;
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+
+    .csv-upload-area:hover {
+      border-color: var(--primary);
+      background: #f8f9ff;
+    }
+
+    .csv-upload-area.dragover {
+      border-color: var(--primary);
+      background: #eef0ff;
+    }
+
+    .csv-upload-area .icon { font-size: 2rem; margin-bottom: 8px; }
+    .csv-upload-area p { font-size: 0.85rem; color: var(--text-light); }
+    .csv-upload-area input[type="file"] { display: none; }
+
+    .action-buttons {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 16px;
+    }
+
+    @media (max-width: 768px) {
+      .sidebar { width: 50px; }
+      .sidebar-nav li a span:last-child { display: none; }
+      .sidebar-brand h2 { font-size: 0.8rem; }
+      .sidebar-brand small { display: none; }
+      .main-content { margin-left: 50px; padding: 16px; }
+      .form-row .form-group { min-width: 100%; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="dashboard">
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <h2>⚙️ Admin</h2>
+        <small>Resume Manager</small>
+      </div>
+      <ul class="sidebar-nav">
+        <li><a href="#personal-section" class="active" onclick="scrollToSection('personal-section')"><span class="icon">👤</span><span>Personal</span></a></li>
+        <li><a href="#summary-section" onclick="scrollToSection('summary-section')"><span class="icon">📝</span><span>Summary</span></a></li>
+        <li><a href="#skills-section" onclick="scrollToSection('skills-section')"><span class="icon">⚡</span><span>Skills</span></a></li>
+        <li><a href="#experience-section" onclick="scrollToSection('experience-section')"><span class="icon">💼</span><span>Experience</span></a></li>
+        <li><a href="#education-section" onclick="scrollToSection('education-section')"><span class="icon">🎓</span><span>Education</span></a></li>
+        <li><a href="#projects-section" onclick="scrollToSection('projects-section')"><span class="icon">🚀</span><span>Projects</span></a></li>
+        <li><a href="#csv-section" onclick="scrollToSection('csv-section')"><span class="icon">📥</span><span>CSV</span></a></li>
+        <li><a href="#actions-section" onclick="scrollToSection('actions-section')"><span class="icon">💾</span><span>Export</span></a></li>
+        <li><a href="#" id="logoutBtn"><span class="icon">🚪</span><span>Logout</span></a></li>
+      </ul>
+    </aside>
+
+    <main class="main-content">
+      <div class="top-bar">
+        <h1>📄 Resume Editor</h1>
+        <span class="user-info">Logged in as Admin</span>
+      </div>
+
+      <!-- Personal -->
+      <div class="card" id="personal-section">
+        <div class="card-header"><h3>👤 Personal Information</h3></div>
+        <div class="card-body">
+          <div class="form-row">
+            <div class="form-group"><label for="name">Full Name</label><input type="text" id="name" placeholder="Russel Rosmin"></div>
+            <div class="form-group"><label for="title">Professional Title</label><input type="text" id="title" placeholder="Front-End Developer & UI/UX Designer"></div>
+          </div>
+          <div class="form-row">
+            <div class="form-group"><label for="email">Email</label><input type="email" id="email" placeholder="russel7ras@gmail.com"></div>
+            <div class="form-group"><label for="phone">Phone</label><input type="text" id="phone" placeholder="011 3923 8740"></div>
+          </div>
+          <div class="form-row">
+            <div class="form-group"><label for="linkedin">LinkedIn URL</label><input type="url" id="linkedin" placeholder="https://www.linkedin.com/in/russel-rosmin/"></div>
+            <div class="form-group"><label for="location">Location</label><input type="text" id="location" placeholder="Kudat, Sabah, Malaysia"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Summary -->
+      <div class="card" id="summary-section">
+        <div class="card-header"><h3>📝 Professional Summary</h3></div>
+        <div class="card-body">
+          <div class="form-group"><textarea id="summary" rows="4" placeholder="Write your professional summary here..."></textarea></div>
+        </div>
+      </div>
+
+      <!-- Skills -->
+      <div class="card" id="skills-section">
+        <div class="card-header"><h3>⚡ Skills</h3></div>
+        <div class="card-body">
+          <div class="form-group"><label for="skills-technical">Technical Skills (comma separated)</label><textarea id="skills-technical" rows="2" placeholder="Flutter, Dart, HTML5, CSS3, JavaScript..."></textarea></div>
+          <div class="form-group"><label for="skills-soft">Soft Skills (comma separated)</label><textarea id="skills-soft" rows="2" placeholder="Problem Solving, Team Collaboration..."></textarea></div>
+        </div>
+      </div>
+
+      <!-- Experience -->
+      <div class="card" id="experience-section">
+        <div class="card-header">
+          <h3>💼 Work Experience</h3>
+          <button class="btn btn-sm btn-outline" id="addExperienceBtn">+ Add</button>
+        </div>
+        <div class="card-body" id="experience-container"></div>
+      </div>
+
+      <!-- Education -->
+      <div class="card" id="education-section">
+        <div class="card-header">
+          <h3>🎓 Education</h3>
+          <button class="btn btn-sm btn-outline" id="addEducationBtn">+ Add</button>
+        </div>
+        <div class="card-body" id="education-container"></div>
+      </div>
+
+      <!-- Projects -->
+      <div class="card" id="projects-section">
+        <div class="card-header">
+          <h3>🚀 Key Projects</h3>
+          <button class="btn btn-sm btn-outline" id="addProjectBtn">+ Add</button>
+        </div>
+        <div class="card-body" id="projects-container"></div>
+      </div>
+
+      <!-- CSV Import / Export -->
+      <div class="card" id="csv-section">
+        <div class="card-header"><h3>📥 Import CSV & Export Template</h3></div>
+        <div class="card-body">
+          <p style="font-size:0.85rem;color:#666;margin-bottom:16px;">
+            Import resume data from a CSV file, or download an Excel template (.xlsx) to fill in.
+          </p>
+
+          <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px;">
+            <button class="btn btn-outline" id="downloadTemplateBtn">📄 Download Excel Template</button>
+          </div>
+
+          <div class="csv-upload-area" id="csvDropArea">
+            <div class="icon">📂</div>
+            <p><strong>Click to upload</strong> or drag & drop a CSV file</p>
+            <p style="font-size:0.78rem;margin-top:4px;">Format: personal, summary, skills, experience, education, projects</p>
+            <input type="file" id="csvFileInput" accept=".csv">
+          </div>
+
+          <div class="action-buttons">
+            <button class="btn btn-success" id="importCsvBtn">📥 Import CSV</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div class="card" id="actions-section">
+        <div class="card-header"><h3>💾 Save & Export</h3></div>
+        <div class="card-body">
+          <p style="margin-bottom:16px;color:#666;font-size:0.85rem;">Save changes locally, then download the JSON file to update your website.</p>
+          <div class="action-buttons">
+            <button class="btn btn-primary" id="saveBtn">💾 Save Data</button>
+            <button class="btn btn-success" id="downloadBtn">📥 Download JSON</button>
+          </div>
+          <p style="margin-top:16px;font-size:0.82rem;color:#888;">
+            <strong>To update your live website:</strong><br>
+            1. Click "Download JSON" to get the data file<br>
+            2. Replace <code>data/resume.json</code> with the downloaded file<br>
+            3. Run: <code>git add . && git commit -m "Update resume" && git push</code>
+          </p>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    if (sessionStorage.getItem('resume_admin_logged_in') !== 'true') {
+      window.location.href = 'admin-login.html';
+    }
+
+    let resumeData = null;
+
+    document.addEventListener('DOMContentLoaded', function () {
+      loadResumeData();
+      setupEventListeners();
+      setupCsvUpload();
+    });
+
+    function loadResumeData() {
+      const saved = localStorage.getItem('resume_data');
+      if (saved) {
+        try { resumeData = JSON.parse(saved); populateForm(resumeData); return; } catch (e) {}
+      }
+      fetch('data/resume.json')
+        .then(res => { if (!res.ok) throw new Error('Failed to load'); return res.json(); })
+        .then(data => { resumeData = data; localStorage.setItem('resume_data', JSON.stringify(data)); populateForm(data); })
+        .catch(err => showToast('Failed to load resume data: ' + err.message, 'error'));
+    }
+
+    function populateForm(data) {
+      if (!data) return;
+      setVal('name', data.personal.name);
+      setVal('title', data.personal.title);
+      setVal('email', data.personal.email);
+      setVal('phone', data.personal.phone);
+      setVal('linkedin', data.personal.linkedin);
+      setVal('location', data.personal.location);
+      setVal('summary', data.summary);
+      setVal('skills-technical', data.skills.technical);
+      setVal('skills-soft', data.skills.soft);
+      renderExperience(data.experience);
+      renderEducation(data.education);
+      renderProjects(data.projects);
+    }
+
+    function setVal(id, val) { const el = document.getElementById(id); if (el) el.value = val || ''; }
+    function getVal(id) { const el = document.getElementById(id); return el ? el.value.trim() : ''; }
+
+    function renderExperience(experience) {
+      const container = document.getElementById('experience-container');
+      container.innerHTML = '';
+      experience.forEach(exp => {
+        const div = document.createElement('div'); div.className = 'entry-item';
+        div.innerHTML = '<button type="button" class="remove-btn" onclick="removeEntry(this)">Remove</button>'
+          + '<div class="form-row"><div class="form-group"><label>Job Title</label><input type="text" class="exp-title" value="' + escapeHtml(exp.title) + '" placeholder="e.g. Front-End Developer"></div>'
+          + '<div class="form-group"><label>Date</label><input type="text" class="exp-date" value="' + escapeHtml(exp.date) + '" placeholder="e.g. 2022 – Present"></div></div>'
+          + '<div class="form-group"><label>Company</label><input type="text" class="exp-company" value="' + escapeHtml(exp.company) + '" placeholder="Company name"></div>'
+          + '<div class="form-group"><label>Bullet Points (one per line)</label><textarea class="exp-bullets" rows="3" placeholder="Describe your responsibilities...">' + escapeHtml(exp.bullets.join('\n')) + '</textarea></div>';
+        container.appendChild(div);
+      });
+    }
+
+    function renderEducation(education) {
+      const container = document.getElementById('education-container');
+      container.innerHTML = '';
+      education.forEach(edu => {
+        const div = document.createElement('div'); div.className = 'entry-item';
+        div.innerHTML = '<button type="button" class="remove-btn" onclick="removeEntry(this)">Remove</button>'
+          + '<div class="form-row"><div class="form-group"><label>Degree</label><input type="text" class="edu-degree" value="' + escapeHtml(edu.degree) + '" placeholder="e.g. Bachelor of Computer Science"></div>'
+          + '<div class="form-group"><label>Date</label><input type="text" class="edu-date" value="' + escapeHtml(edu.date) + '" placeholder="e.g. 2018 – 2022"></div></div>'
+          + '<div class="form-group"><label>School</label><input type="text" class="edu-school" value="' + escapeHtml(edu.school) + '" placeholder="University name"></div>'
+          + '<div class="form-group"><label>Details (one per line)</label><textarea class="edu-bullets" rows="2" placeholder="Achievements and details...">' + escapeHtml(edu.bullets.join('\n')) + '</textarea></div>';
+        container.appendChild(div);
+      });
+    }
+
+    function renderProjects(projects) {
+      const container = document.getElementById('projects-container');
+      container.innerHTML = '';
+      projects.forEach(proj => {
+        const div = document.createElement('div'); div.className = 'entry-item';
+        div.innerHTML = '<button type="button" class="remove-btn" onclick="removeEntry(this)">Remove</button>'
+          + '<div class="form-row"><div class="form-group"><label>Project Name</label><input type="text" class="proj-name" value="' + escapeHtml(proj.name) + '" placeholder="Project name"></div>'
+          + '<div class="form-group"><label>Role</label><input type="text" class="proj-role" value="' + escapeHtml(proj.role) + '" placeholder="Your role"></div></div>'
+          + '<div class="form-group"><label>Description</label><textarea class="proj-desc" rows="3" placeholder="Project description">' + escapeHtml(proj.description) + '</textarea></div>';
+        container.appendChild(div);
+      });
+    }
+
+    function collectFormData() {
+      return {
+        personal: { name: getVal('name'), title: getVal('title'), email: getVal('email'), phone: getVal('phone'), linkedin: getVal('linkedin'), location: getVal('location') },
+        summary: getVal('summary'),
+        skills: { technical: getVal('skills-technical'), soft: getVal('skills-soft') },
+        experience: collectEntries('#experience-container', 'exp-title', 'exp-date', 'exp-company', 'exp-bullets'),
+        education: collectEntries('#education-container', 'edu-degree', 'edu-date', 'edu-school', 'edu-bullets'),
+        projects: collectProjects()
+      };
+    }
+
+    function collectEntries(selector, titleClass, dateClass, companyClass, bulletsClass) {
+      const items = [];
+      document.querySelectorAll(selector + ' .entry-item').forEach(el => {
+        const bulletsText = el.querySelector('.' + bulletsClass).value.trim();
+        const bullets = bulletsText ? bulletsText.split('\n').map(b => b.trim()).filter(b => b) : [];
+        const item = {};
+        if (titleClass.indexOf('edu-') === 0) {
+          item.degree = el.querySelector('.' + titleClass).value.trim();
+        } else {
+          item.title = el.querySelector('.' + titleClass).value.trim();
+        }
+        item.date = el.querySelector('.' + dateClass).value.trim();
+        item.company = el.querySelector('.' + companyClass).value.trim();
+        item.bullets = bullets;
+        items.push(item);
+      });
+      return items;
+    }
+
+    function collectProjects() {
+      const items = [];
+      document.querySelectorAll('#projects-container .entry-item').forEach(el => {
+        items.push({ name: el.querySelector('.proj-name').value.trim(), role: el.querySelector('.proj-role').value.trim(), description: el.querySelector('.proj-desc').value.trim() });
+      });
+      return items;
+    }
+
+    function addExperience() {
+      const container = document.getElementById('experience-container');
+      const div = document.createElement('div'); div.className = 'entry-item';
+      div.innerHTML = '<button type="button" class="remove-btn" onclick="removeEntry(this)">Remove</button>'
+        + '<div class="form-row"><div class="form-group"><label>Job Title</label><input type="text" class="exp-title" placeholder="e.g. Front-End Developer"></div>'
+        + '<div class="form-group"><label>Date</label><input type="text" class="exp-date" placeholder="e.g. 2022 – Present"></div></div>'
+        + '<div class="form-group"><label>Company</label><input type="text" class="exp-company" placeholder="Company name"></div>'
+        + '<div class="form-group"><label>Bullet Points (one per line)</label><textarea class="exp-bullets" rows="3" placeholder="Describe your responsibilities..."></textarea></div>';
+      container.appendChild(div);
+      showToast('New experience entry added', 'info');
+    }
+
+    function addEducation() {
+      const container = document.getElementById('education-container');
+      const div = document.createElement('div'); div.className = 'entry-item';
+      div.innerHTML = '<button type="button" class="remove-btn" onclick="removeEntry(this)">Remove</button>'
+        + '<div class="form-row"><div class="form-group"><label>Degree</label><input type="text" class="edu-degree" placeholder="e.g. Bachelor of Computer Science"></div>'
+        + '<div class="form-group"><label>Date</label><input type="text" class="edu-date" placeholder="e.g. 2018 – 2022"></div></div>'
+        + '<div class="form-group"><label>School</label><input type="text" class="edu-school" placeholder="University name"></div>'
+        + '<div class="form-group"><label>Details (one per line)</label><textarea class="edu-bullets" rows="2" placeholder="Achievements and details..."></textarea></div>';
+      container.appendChild(div);
+      showToast('New education entry added', 'info');
+    }
+
+    function addProject() {
+      const container = document.getElementById('projects-container');
+      const div = document.createElement('div'); div.className = 'entry-item';
+      div.innerHTML = '<button type="button" class="remove-btn" onclick="removeEntry(this)">Remove</button>'
+        + '<div class="form-row"><div class="form-group"><label>Project Name</label><input type="text" class="proj-name" placeholder="Project name"></div>'
+        + '<div class="form-group"><label>Role</label><input type="text" class="proj-role" placeholder="Your role"></div></div>'
+        + '<div class="form-group"><label>Description</label><textarea class="proj-desc" rows="3" placeholder="Project description"></textarea></div>';
+      container.appendChild(div);
+      showToast('New project entry added', 'info');
+    }
+
+    function removeEntry(btn) { if (confirm('Remove this entry?')) { btn.closest('.entry-item').remove(); showToast('Entry removed', 'info'); } }
+
+    function saveData() {
+      const data = collectFormData();
+      if (!data.personal.name) { showToast('Please enter your name', 'error'); return; }
+      resumeData = data;
+      localStorage.setItem('resume_data', JSON.stringify(data));
+      showToast('Data saved locally! Download the JSON file to update your website.', 'success');
+    }
+
+    function downloadJSON() {
+      const data = collectFormData();
+      if (!data.personal.name) { showToast('Please fill in at least your name', 'error'); return; }
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a'); a.href = url; a.download = 'resume.json';
+      document.body.appendChild(a); a.click(); document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      showToast('resume.json downloaded! Replace data/resume.json with this file.', 'success');
+    }
+
+    // --- CSV Import ---
+
+    function setupCsvUpload() {
+      const dropArea = document.getElementById('csvDropArea');
+      const fileInput = document.getElementById('csvFileInput');
+
+      dropArea.addEventListener('click', function() { fileInput.click(); });
+
+      dropArea.addEventListener('dragover', function(e) {
+        e.preventDefault();
+        dropArea.classList.add('dragover');
+      });
+
+      dropArea.addEventListener('dragleave', function() {
+        dropArea.classList.remove('dragover');
+      });
+
+      dropArea.addEventListener('drop', function(e) {
+        e.preventDefault();
+        dropArea.classList.remove('dragover');
+        if (e.dataTransfer.files.length > 0) {
+          fileInput.files = e.dataTransfer.files;
+        }
+      });
+
+      document.getElementById('importCsvBtn').addEventListener('click', importCsv);
+      document.getElementById('downloadTemplateBtn').addEventListener('click', downloadCsvTemplate);
+    }
+
+    function importCsv() {
+      const fileInput = document.getElementById('csvFileInput');
+      if (!fileInput.files || fileInput.files.length === 0) {
+        showToast('Please select a CSV file first', 'error');
+        return;
+      }
+      const file = fileInput.files[0];
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const csv = e.target.result;
+        const parsed = parseCsvToData(csv);
+        if (parsed) {
+          populateForm(parsed);
+          localStorage.setItem('resume_data', JSON.stringify(parsed));
+          resumeData = parsed;
+          showToast('Data imported from CSV successfully!', 'success');
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    function parseCsvToData(csv) {
+      try {
+        const lines = csv.split('\n').map(function(line) {
+          const result = []; let current = ''; let inQuotes = false;
+          for (var i = 0; i < line.length; i++) {
+            var char = line[i];
+            if (char === '"') { inQuotes = !inQuotes; }
+            else if (char === ',' && !inQuotes) { result.push(current.trim()); current = ''; }
+            else { current += char; }
+          }
+          result.push(current.trim());
+          return result;
+        }).filter(function(line) { return line.length > 0 && line.some(function(cell) { return cell.trim() !== ''; }); });
+
+        if (lines.length < 2) { showToast('CSV file appears empty.', 'error'); return null; }
+
+        const data = {
+          personal: { name: '', title: '', email: '', phone: '', linkedin: '', location: '' },
+          summary: '',
+          skills: { technical: '', soft: '' },
+          experience: [],
+          education: [],
+          projects: []
+        };
+
+        var currentSection = '';
+        for (var i = 0; i < lines.length; i++) {
+          var row = lines[i];
+          var firstCell = (row[0] || '').toLowerCase().replace(/[^a-z]/g, '');
+
+          if (firstCell.includes('personal') || firstCell.includes('name')) {
+            currentSection = 'personal';
+            for (var j = i; j < Math.min(i + 10, lines.length); j++) {
+              var r = lines[j];
+              var key = (r[0] || '').toLowerCase().trim();
+              var val = (r[1] || '').trim();
+              if (key.includes('name')) data.personal.name = val;
+              else if (key.includes('title') || key.includes('position')) data.personal.title = val;
+              else if (key.includes('email')) data.personal.email = val;
+              else if (key.includes('phone') || key.includes('tel')) data.personal.phone = val;
+              else if (key.includes('linkedin')) data.personal.linkedin = val;
+              else if (key.includes('location') || key.includes('address')) data.personal.location = val;
+              else if (key.includes('summary')) data.summary = val;
+            }
+            continue;
+          }
+
+          if (firstCell.includes('summary')) {
+            currentSection = 'summary';
+            data.summary = (row[1] || '').trim();
+            continue;
+          }
+
+          if (firstCell.includes('skill')) {
+            currentSection = 'skills';
+            continue;
+          }
+
+          if (firstCell.includes('experience') || firstCell.includes('work')) {
+            currentSection = 'experience';
+            continue;
+          }
+
+          if (firstCell.includes('education')) {
+            currentSection = 'education';
+            continue;
+          }
+
+          if (firstCell.includes('project')) {
+            currentSection = 'projects';
+            continue;
+          }
+
+          if (currentSection === 'skills' && row[0] && row[1]) {
+            var type = row[0].toLowerCase().trim();
+            var items = row[1].trim();
+            if (type.includes('technical')) data.skills.technical = items;
+            else if (type.includes('soft')) data.skills.soft = items;
+            continue;
+          }
+
+          if (currentSection === 'experience' && row[0] && row[0] !== 'title' && row[0] !== 'job title') {
+            var bullets = (row[3] || '').split('|').map(function(b) { return b.trim(); }).filter(function(b) { return b; });
+            data.experience.push({
+              title: row[0].trim(),
+              date: (row[1] || '').trim(),
+              company: (row[2] || '').trim(),
+              bullets: bullets.length > 0 ? bullets : [(row[3] || '').trim()]
+            });
+            continue;
+          }
+
+          if (currentSection === 'education' && row[0] && row[0] !== 'degree') {
+            var bullets = (row[3] || '').split('|').map(function(b) { return b.trim(); }).filter(function(b) { return b; });
+            data.education.push({
+              degree: row[0].trim(),
+              date: (row[1] || '').trim(),
+              school: (row[2] || '').trim(),
+              bullets: bullets.length > 0 ? bullets : [(row[3] || '').trim()]
+            });
+            continue;
+          }
+
+          if (currentSection === 'projects' && row[0] && row[0] !== 'project name' && row[0] !== 'name') {
+            data.projects.push({
+              name: row[0].trim(),
+              role: (row[1] || '').trim(),
+              description: (row[2] || '').trim()
+            });
+            continue;
+          }
+        }
+
+        return data;
+      } catch (e) {
+        showToast('Error parsing CSV: ' + e.message, 'error');
+        return null;
+      }
+    }
+
+    // --- Excel Template ---
+
+    function downloadCsvTemplate() {
+      // Personal sheet
+      var personalData = [
+        ['Field', 'Value'],
+        ['Name', 'Your Full Name'],
+        ['Title', 'Your Professional Title'],
+        ['Email', 'your.email@example.com'],
+        ['Phone', '+60 12 345 6789'],
+        ['LinkedIn', 'https://www.linkedin.com/in/your-profile'],
+        ['Location', 'City, Country']
+      ];
+
+      // Summary sheet
+      var summaryData = [
+        ['Professional Summary'],
+        ['Your professional summary goes here...']
+      ];
+
+      // Skills sheet
+      var skillsData = [
+        ['Type', 'Skills'],
+        ['Technical', 'Flutter, Dart, HTML5, CSS3, JavaScript, Bootstrap, SCSS, Figma'],
+        ['Soft', 'Problem Solving, Team Collaboration, Attention to Detail']
+      ];
+
+      // Experience sheet
+      var expData = [
+        ['Title', 'Date', 'Company', 'Bullet Points (separate with |)'],
+        ['Front-End Flutter Developer', '2022 - Present', 'Phi Software Company', 'Developed Flutter apps|Implemented QR features|Enhanced UI/UX'],
+        ['Web Developer (Intern)', '2021 - 2022', 'Phi Software Company', 'Designed websites|Created branding|Built prototypes']
+      ];
+
+      // Education sheet
+      var eduData = [
+        ['Degree', 'Date', 'School', 'Details (separate with |)'],
+        ['Bachelor of Computer Science', '2018 - 2022', 'Universiti Malaysia Sabah', 'CGPA: 3.45|Dean List Award'],
+        ['Matriculation (Science)', '2017 - 2018', 'Labuan Matriculation College', 'CGPA: 3.71']
+      ];
+
+      // Projects sheet
+      var projData = [
+        ['Name', 'Role', 'Description'],
+        ['Bank Islam Flutter App', 'Front-End Developer', 'Developed Flutter app for Bank Islam integrating DuitNow QR Scanner and QR Payment features.'],
+        ['BSN Flutter App', 'Front-End Developer', 'Created innovative UI for QR code functionality including scanner and payment features.'],
+        ['Gamified Sabah Tourism App (FYP)', 'Final Year Project', 'Developed a gamified mobile application to promote tourism in Sabah.']
+      ];
+
+      // Instructions sheet
+      var instructionsData = [
+        ['📋 RESUME TEMPLATE - INSTRUCTIONS'],
+        [''],
+        ['This Excel file contains 6 sheets. Fill in your data and save.'],
+        ['Then export as CSV (File > Save As > CSV UTF-8) and import it in the admin dashboard.'],
+        [''],
+        ['--- SHEET GUIDE ---'],
+        [''],
+        ['📄 Personal: Your basic contact information'],
+        ['📝 Summary: Your professional summary / objective'],
+        ['⚡ Skills: Technical and soft skills (comma separated)'],
+        ['💼 Experience: Work history - use | to separate bullet points'],
+        ['🎓 Education: Academic background - use | to separate details'],
+        ['🚀 Projects: Key projects with name, role, and description'],
+        [''],
+        ['💡 TIPS:'],
+        ['• Do NOT change the column headers (first row of each sheet)'],
+        ['• For bullet points in Experience/Education, use the | symbol to separate each point'],
+        ['• Leave unused rows empty'],
+        ['• After filling, go to File > Save As > CSV UTF-8 (.csv) to export'],
+        ['• Then use the Import CSV button in the admin dashboard']
+      ];
+
+      var wb = XLSX.utils.book_new();
+
+      var ws1 = XLSX.utils.aoa_to_sheet(personalData);
+      XLSX.utils.book_append_sheet(wb, ws1, 'Personal');
+
+      var ws2 = XLSX.utils.aoa_to_sheet(summaryData);
+      XLSX.utils.book_append_sheet(wb, ws2, 'Summary');
+
+      var ws3 = XLSX.utils.aoa_to_sheet(skillsData);
+      XLSX.utils.book_append_sheet(wb, ws3, 'Skills');
+
+      var ws4 = XLSX.utils.aoa_to_sheet(expData);
+      XLSX.utils.book_append_sheet(wb, ws4, 'Experience');
+
+      var ws5 = XLSX.utils.aoa_to_sheet(eduData);
+      XLSX.utils.book_append_sheet(wb, ws5, 'Education');
+
+      var ws6 = XLSX.utils.aoa_to_sheet(projData);
+      XLSX.utils.book_append_sheet(wb, ws6, 'Projects');
+
+      var ws7 = XLSX.utils.aoa_to_sheet(instructionsData);
+      // Set column width for instructions
+      ws7['!cols'] = [{ wch: 80 }];
+      XLSX.utils.book_append_sheet(wb, ws7, 'Instructions');
+
+      var wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
+      var blob = new Blob([wbout], { type: 'application/octet-stream' });
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement('a'); a.href = url; a.download = 'resume-template.xlsx';
+      document.body.appendChild(a); a.click(); document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      showToast('Excel template downloaded! Fill it in, export as CSV, then import.', 'success');
+    }
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      var div = document.createElement('div');
+      div.textContent = str;
+      return div.innerHTML;
+    }
+
+    function showToast(message, type) {
+      if (!type) type = 'info';
+      var existing = document.querySelector('.toast');
+      if (existing) existing.remove();
+      var toast = document.createElement('div');
+      toast.className = 'toast ' + type;
+      toast.textContent = message;
+      document.body.appendChild(toast);
+      requestAnimationFrame(function() { toast.classList.add('show'); });
+      setTimeout(function() { toast.classList.remove('show'); setTimeout(function() { toast.remove(); }, 300); }, 4000);
+    }
+
+    function setupEventListeners() {
+      var saveBtn = document.getElementById('saveBtn');
+      if (saveBtn) saveBtn.addEventListener('click', saveData);
+      var downloadBtn = document.getElementById('downloadBtn');
+      if (downloadBtn) downloadBtn.addEventListener('click', downloadJSON);
+      var addExpBtn = document.getElementById('addExperienceBtn');
+      if (addExpBtn) addExpBtn.addEventListener('click', addExperience);
+      var addEduBtn = document.getElementById('addEducationBtn');
+      if (addEduBtn) addEduBtn.addEventListener('click', addEducation);
+      var addProjBtn = document.getElementById('addProjectBtn');
+      if (addProjBtn) addProjBtn.addEventListener('click', addProject);
+      var logoutBtn = document.getElementById('logoutBtn');
+      if (logoutBtn) logoutBtn.addEventListener('click', function(e) { e.preventDefault();
+      sessionStorage.removeItem('resume_admin_logged_in'); window.location.href = 'admin-login.html'; });
+    }
+
+    function scrollToSection(id) {
+      var el = document.getElementById(id);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        document.querySelectorAll('.sidebar-nav a').forEach(function(a) { a.classList.remove('active'); });
+        var link = document.querySelector('.sidebar-nav a[href="#' + id + '"]');
+        if (link) link.classList.add('active');
+      }
+    }
+
+    document.addEventListener('scroll', function() {
+      var sections = document.querySelectorAll('.card, .csv-upload-area');
+      var current = '';
+      sections.forEach(function(section) {
+        var top = section.offsetTop - 100;
+        if (window.scrollY >= top) { current = section.id; }
+      });
+      document.querySelectorAll('.sidebar-nav a').forEach(function(a) {
+        a.classList.remove('active');
+        if (a.getAttribute('href') === '#' + current) { a.classList.add('active'); }
+      });
+    });
+  </script>
+</body>
+</html>
