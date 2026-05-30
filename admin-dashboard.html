@@ -8,19 +8,57 @@
   <link rel="shortcut icon" href="images/favicon.svg" type="Icon">
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
   <style>
+    /* ===== LIGHT MODE (default) ===== */
     :root {
       --primary: #1a1a2e;
       --primary-light: #2d2d4e;
+      --primary-hover: #3d3d5e;
       --accent: #e94560;
+      --accent-hover: #ff6b81;
       --bg: #f0f2f5;
       --card-bg: #ffffff;
-      --text: #333;
-      --text-light: #888;
+      --card-border: #e0e0e0;
+      --text: #333333;
+      --text-light: #888888;
+      --text-muted: #aaaaaa;
       --border: #e0e0e0;
+      --input-bg: #ffffff;
+      --input-border: #d0d0d0;
       --success: #28a745;
+      --success-hover: #34ce57;
       --warning: #ffc107;
       --danger: #dc3545;
+      --danger-hover: #e74c3c;
       --shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+      --sidebar-width: 180px;
+      --sidebar-text: rgba(255,255,255,0.7);
+      --sidebar-text-hover: #ffffff;
+    }
+
+    /* ===== DARK MODE ===== */
+    .dark-mode {
+      --primary: #0f0f1a;
+      --primary-light: #1a1a2e;
+      --primary-hover: #252545;
+      --accent: #e94560;
+      --accent-hover: #ff6b81;
+      --bg: #0a0a14;
+      --card-bg: #12121f;
+      --card-border: #1e1e35;
+      --text: #e0e0e8;
+      --text-light: #8888a0;
+      --text-muted: #555570;
+      --border: #1e1e35;
+      --input-bg: #0d0d1a;
+      --input-border: #2a2a45;
+      --success: #2ecc71;
+      --success-hover: #3ddc84;
+      --warning: #f1c40f;
+      --danger: #e74c3c;
+      --danger-hover: #ff5e5e;
+      --shadow: 0 2px 16px rgba(0, 0, 0, 0.3);
+      --sidebar-text: rgba(255,255,255,0.7);
+      --sidebar-text-hover: #ffffff;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -30,53 +68,74 @@
       background: var(--bg);
       color: var(--text);
       min-height: 100vh;
+      transition: background 0.3s ease, color 0.3s ease;
     }
 
     .dashboard { display: flex; min-height: 100vh; }
 
     .sidebar {
-      width: 200px;
+      width: var(--sidebar-width);
       background: var(--primary);
       color: #fff;
-      padding: 20px 0;
+      padding: 0;
       position: fixed;
       top: 0; left: 0; bottom: 0;
       overflow-y: auto;
       z-index: 100;
+      border-right: 1px solid var(--card-border);
+      transition: background 0.3s ease, border-color 0.3s ease;
     }
 
     .sidebar-brand {
-      padding: 0 20px 20px;
-      border-bottom: 1px solid rgba(255,255,255,0.1);
-      margin-bottom: 10px;
+      padding: 22px 20px 18px;
+      border-bottom: 1px solid var(--card-border);
+      margin-bottom: 6px;
+      transition: border-color 0.3s ease;
     }
 
-    .sidebar-brand h2 { font-size: 1.1rem; }
-    .sidebar-brand small { font-size: 0.7rem; opacity: 0.6; }
+    .sidebar-brand h2 {
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      color: #fff;
+    }
+    .sidebar-brand small {
+      font-size: 0.65rem;
+      opacity: 0.4;
+      letter-spacing: 0.3px;
+      text-transform: uppercase;
+    }
 
-    .sidebar-nav { list-style: none; padding: 0; }
+    .sidebar-nav { list-style: none; padding: 6px 10px; }
 
     .sidebar-nav li a {
       display: flex;
       align-items: center;
-      gap: 8px;
-      padding: 9px 20px;
-      color: rgba(255,255,255,0.7);
+      padding: 10px 14px;
+      color: var(--sidebar-text);
       text-decoration: none;
-      font-size: 0.82rem;
-      transition: all 0.2s;
+      font-size: 0.8rem;
+      font-weight: 500;
+      border-radius: 8px;
+      transition: all 0.2s ease;
+      letter-spacing: 0.2px;
     }
 
-    .sidebar-nav li a:hover,
+    .sidebar-nav li a:hover {
+      background: var(--primary-hover);
+      color: var(--sidebar-text-hover);
+    }
+
     .sidebar-nav li a.active {
-      background: rgba(255,255,255,0.1);
+      background: var(--accent);
       color: #fff;
+      font-weight: 600;
     }
 
     .main-content {
-      margin-left: 200px;
+      margin-left: var(--sidebar-width);
       flex: 1;
-      padding: 24px 30px;
+      padding: 28px 32px;
       max-width: 100%;
     }
 
@@ -84,166 +143,238 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 24px;
-      padding-bottom: 16px;
+      margin-bottom: 28px;
+      padding-bottom: 18px;
       border-bottom: 1px solid var(--border);
+      transition: border-color 0.3s ease;
     }
 
-    .top-bar h1 { font-size: 1.3rem; }
-    .user-info { font-size: 0.82rem; color: var(--text-light); }
+    .top-bar-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .top-bar h1 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--text);
+      transition: color 0.3s ease;
+    }
+
+    .top-bar-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .user-info {
+      font-size: 0.8rem;
+      color: var(--text-light);
+      background: var(--card-bg);
+      padding: 6px 14px;
+      border-radius: 20px;
+      border: 1px solid var(--card-border);
+      transition: all 0.3s ease;
+    }
+
+    .theme-toggle {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 1px solid var(--card-border);
+      background: var(--card-bg);
+      color: var(--text-light);
+      cursor: pointer;
+      font-size: 1.1rem;
+      transition: all 0.3s ease;
+    }
+
+    .theme-toggle:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      transform: scale(1.05);
+    }
 
     .card {
       background: var(--card-bg);
-      border-radius: 10px;
+      border-radius: 12px;
+      border: 1px solid var(--card-border);
       box-shadow: var(--shadow);
-      margin-bottom: 20px;
+      margin-bottom: 22px;
       overflow: hidden;
+      transition: all 0.3s ease;
     }
 
     .card-header {
-      padding: 14px 20px;
-      border-bottom: 1px solid var(--border);
+      padding: 16px 22px;
+      border-bottom: 1px solid var(--card-border);
       display: flex;
       justify-content: space-between;
       align-items: center;
+      transition: border-color 0.3s ease;
     }
 
-    .card-header h3 { font-size: 0.95rem; }
+    .card-header h3 {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text);
+      transition: color 0.3s ease;
+    }
 
-    .card-body { padding: 20px; }
+    .card-body { padding: 22px; }
 
-    .form-group { margin-bottom: 14px; }
+    .form-group { margin-bottom: 16px; }
 
     .form-group label {
       display: block;
-      font-size: 0.8rem;
+      font-size: 0.75rem;
       font-weight: 600;
-      margin-bottom: 4px;
-      color: #555;
+      margin-bottom: 5px;
+      color: var(--text-light);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      transition: color 0.3s ease;
     }
 
     .form-group input,
     .form-group textarea {
       width: 100%;
-      padding: 9px 12px;
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      font-size: 0.88rem;
+      padding: 10px 14px;
+      background: var(--input-bg);
+      border: 1px solid var(--input-border);
+      border-radius: 8px;
+      font-size: 0.85rem;
       font-family: inherit;
-      transition: border-color 0.2s;
+      color: var(--text);
+      transition: all 0.3s ease;
+    }
+
+    .form-group input::placeholder,
+    .form-group textarea::placeholder {
+      color: var(--text-muted);
     }
 
     .form-group input:focus,
     .form-group textarea:focus {
       outline: none;
-      border-color: var(--primary);
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(233, 69, 96, 0.15);
     }
 
     .form-row {
       display: flex;
-      gap: 14px;
+      gap: 16px;
       flex-wrap: wrap;
     }
 
     .form-row .form-group {
       flex: 1;
-      min-width: 180px;
+      min-width: 200px;
     }
 
     .btn {
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      padding: 8px 18px;
+      padding: 9px 20px;
       border: none;
       border-radius: 8px;
-      font-size: 0.82rem;
+      font-size: 0.8rem;
       font-weight: 600;
       cursor: pointer;
       transition: all 0.2s;
+      letter-spacing: 0.2px;
     }
 
-    .btn-primary { background: var(--primary); color: #fff; }
-    .btn-primary:hover { background: var(--primary-light); }
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-primary:hover { background: var(--accent-hover); transform: translateY(-1px); }
     .btn-success { background: var(--success); color: #fff; }
-    .btn-success:hover { opacity: 0.9; }
+    .btn-success:hover { background: var(--success-hover); transform: translateY(-1px); }
     .btn-accent { background: var(--accent); color: #fff; }
-    .btn-accent:hover { opacity: 0.9; }
+    .btn-accent:hover { background: var(--accent-hover); transform: translateY(-1px); }
     .btn-outline {
       background: transparent;
-      border: 1px solid var(--border);
-      color: var(--text);
+      border: 1px solid var(--input-border);
+      color: var(--text-light);
     }
-    .btn-outline:hover { border-color: var(--primary); color: var(--primary); }
-    .btn-sm { padding: 5px 12px; font-size: 0.78rem; }
+    .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+    .btn-sm { padding: 6px 14px; font-size: 0.75rem; }
 
     .entry-item {
-      background: #f8f9fa;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 14px;
-      margin-bottom: 10px;
+      background: var(--input-bg);
+      border: 1px solid var(--input-border);
+      border-radius: 10px;
+      padding: 16px;
+      margin-bottom: 12px;
       position: relative;
+      transition: all 0.3s ease;
     }
 
     .remove-btn {
       position: absolute;
-      top: 6px;
-      right: 6px;
+      top: 8px;
+      right: 8px;
       background: var(--danger);
       color: #fff;
       border: none;
-      border-radius: 4px;
-      padding: 3px 8px;
-      font-size: 0.7rem;
+      border-radius: 6px;
+      padding: 4px 10px;
+      font-size: 0.68rem;
+      font-weight: 600;
       cursor: pointer;
-      opacity: 0.7;
-      transition: opacity 0.2s;
+      opacity: 0.6;
+      transition: all 0.2s;
     }
 
-    .remove-btn:hover { opacity: 1; }
+    .remove-btn:hover { opacity: 1; background: var(--danger-hover); }
 
     .toast {
       position: fixed;
       bottom: 24px;
       right: 24px;
-      padding: 12px 20px;
+      padding: 14px 24px;
       border-radius: 10px;
       color: #fff;
       font-size: 0.85rem;
       font-weight: 500;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.4);
       transform: translateY(20px);
       opacity: 0;
       transition: all 0.3s ease;
       z-index: 9999;
+      backdrop-filter: blur(10px);
     }
 
     .toast.show { transform: translateY(0); opacity: 1; }
-    .toast.success { background: var(--success); }
-    .toast.error { background: var(--danger); }
-    .toast.info { background: var(--primary); }
+    .toast.success { background: rgba(46, 204, 113, 0.9); }
+    .toast.error { background: rgba(231, 76, 60, 0.9); }
+    .toast.info { background: rgba(233, 69, 96, 0.9); }
 
     .csv-upload-area {
-      border: 2px dashed var(--border);
-      border-radius: 10px;
-      padding: 30px 20px;
+      border: 2px dashed var(--input-border);
+      border-radius: 12px;
+      padding: 32px 20px;
       text-align: center;
-      transition: all 0.2s;
+      transition: all 0.3s ease;
       cursor: pointer;
+      background: var(--input-bg);
     }
 
     .csv-upload-area:hover {
-      border-color: var(--primary);
-      background: #f8f9ff;
+      border-color: var(--accent);
+      background: rgba(233, 69, 96, 0.05);
     }
 
     .csv-upload-area.dragover {
-      border-color: var(--primary);
-      background: #eef0ff;
+      border-color: var(--accent);
+      background: rgba(233, 69, 96, 0.1);
     }
 
-    .csv-upload-area .icon { font-size: 2rem; margin-bottom: 8px; }
+    .csv-upload-area .icon { font-size: 2rem; margin-bottom: 8px; opacity: 0.6; }
     .csv-upload-area p { font-size: 0.85rem; color: var(--text-light); }
     .csv-upload-area input[type="file"] { display: none; }
 
@@ -254,11 +385,20 @@
       margin-top: 16px;
     }
 
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--input-border); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+
+    ::selection { background: var(--accent); color: #fff; }
+
     @media (max-width: 768px) {
-      .sidebar { width: 50px; }
+      :root { --sidebar-width: 50px; }
       .sidebar-nav li a span:last-child { display: none; }
-      .sidebar-brand h2 { font-size: 0.8rem; }
+      .sidebar-nav li a { justify-content: center; padding: 10px 0; }
+      .sidebar-brand h2 { font-size: 0.7rem; text-align: center; }
       .sidebar-brand small { display: none; }
+      .sidebar-brand { padding: 14px 5px; }
       .main-content { margin-left: 50px; padding: 16px; }
       .form-row .form-group { min-width: 100%; }
     }
@@ -269,26 +409,28 @@
   <div class="dashboard">
     <aside class="sidebar">
       <div class="sidebar-brand">
-        <h2>⚙️ Admin</h2>
-        <small>Resume Manager</small>
+        <h2>Resume Manager</h2>
       </div>
       <ul class="sidebar-nav">
-        <li><a href="#personal-section" class="active" onclick="scrollToSection('personal-section')"><span class="icon">👤</span><span>Personal</span></a></li>
-        <li><a href="#summary-section" onclick="scrollToSection('summary-section')"><span class="icon">📝</span><span>Summary</span></a></li>
-        <li><a href="#skills-section" onclick="scrollToSection('skills-section')"><span class="icon">⚡</span><span>Skills</span></a></li>
-        <li><a href="#experience-section" onclick="scrollToSection('experience-section')"><span class="icon">💼</span><span>Experience</span></a></li>
-        <li><a href="#education-section" onclick="scrollToSection('education-section')"><span class="icon">🎓</span><span>Education</span></a></li>
-        <li><a href="#projects-section" onclick="scrollToSection('projects-section')"><span class="icon">🚀</span><span>Projects</span></a></li>
-        <li><a href="#csv-section" onclick="scrollToSection('csv-section')"><span class="icon">📥</span><span>CSV</span></a></li>
-        <li><a href="#actions-section" onclick="scrollToSection('actions-section')"><span class="icon">💾</span><span>Export</span></a></li>
-        <li><a href="#" id="logoutBtn"><span class="icon">🚪</span><span>Logout</span></a></li>
+        <li><a href="#personal-section" class="active" onclick="scrollToSection('personal-section')"><span>Personal</span></a></li>
+        <li><a href="#summary-section" onclick="scrollToSection('summary-section')"><span>Summary</span></a></li>
+        <li><a href="#skills-section" onclick="scrollToSection('skills-section')"><span>Skills</span></a></li>
+        <li><a href="#experience-section" onclick="scrollToSection('experience-section')"><span>Experience</span></a></li>
+        <li><a href="#education-section" onclick="scrollToSection('education-section')"><span>Education</span></a></li>
+        <li><a href="#projects-section" onclick="scrollToSection('projects-section')"><span>Projects</span></a></li>
+        <li><a href="#csv-section" onclick="scrollToSection('csv-section')"><span>CSV</span></a></li>
+        <li><a href="#actions-section" onclick="scrollToSection('actions-section')"><span>Export</span></a></li>
       </ul>
     </aside>
 
     <main class="main-content">
       <div class="top-bar">
-        <h1>📄 Resume Editor</h1>
-        <span class="user-info">Logged in as Admin</span>
+        <div class="top-bar-left">
+          <h1>📄 Resume Editor</h1>
+        </div>
+        <div class="top-bar-right">
+          <button class="theme-toggle" id="themeToggle" title="Toggle dark/light mode">🌙</button>
+        </div>
       </div>
 
       <!-- Personal -->
@@ -358,7 +500,7 @@
       <div class="card" id="csv-section">
         <div class="card-header"><h3>📥 Import CSV & Export Template</h3></div>
         <div class="card-body">
-          <p style="font-size:0.85rem;color:#666;margin-bottom:16px;">
+          <p style="font-size:0.85rem;color:var(--text-light);margin-bottom:16px;">
             Import resume data from a CSV file, or download an Excel template (.xlsx) to fill in.
           </p>
 
@@ -383,12 +525,12 @@
       <div class="card" id="actions-section">
         <div class="card-header"><h3>💾 Save & Export</h3></div>
         <div class="card-body">
-          <p style="margin-bottom:16px;color:#666;font-size:0.85rem;">Save changes locally, then download the JSON file to update your website.</p>
+          <p style="margin-bottom:16px;color:var(--text-light);font-size:0.85rem;">Save changes locally, then download the JSON file to update your website.</p>
           <div class="action-buttons">
             <button class="btn btn-primary" id="saveBtn">💾 Save Data</button>
             <button class="btn btn-success" id="downloadBtn">📥 Download JSON</button>
           </div>
-          <p style="margin-top:16px;font-size:0.82rem;color:#888;">
+          <p style="margin-top:16px;font-size:0.82rem;color:var(--text-muted);">
             <strong>To update your live website:</strong><br>
             1. Click "Download JSON" to get the data file<br>
             2. Replace <code>data/resume.json</code> with the downloaded file<br>
@@ -400,13 +542,34 @@
   </div>
 
   <script>
-    if (sessionStorage.getItem('resume_admin_logged_in') !== 'true') {
-      window.location.href = 'admin-login.html';
-    }
-
     let resumeData = null;
 
+    // --- Theme Toggle ---
+
+    function initTheme() {
+      var saved = localStorage.getItem('resume_admin_theme');
+      if (saved === 'dark') {
+        document.body.classList.add('dark-mode');
+        var btn = document.getElementById('themeToggle');
+        if (btn) btn.textContent = '☀️';
+      }
+      var toggleBtn = document.getElementById('themeToggle');
+      if (toggleBtn) {
+        toggleBtn.addEventListener('click', toggleTheme);
+      }
+    }
+
+    function toggleTheme() {
+      var isDark = document.body.classList.toggle('dark-mode');
+      var btn = document.getElementById('themeToggle');
+      if (btn) {
+        btn.textContent = isDark ? '☀️' : '🌙';
+      }
+      localStorage.setItem('resume_admin_theme', isDark ? 'dark' : 'light');
+    }
+
     document.addEventListener('DOMContentLoaded', function () {
+      initTheme();
       loadResumeData();
       setupEventListeners();
       setupCsvUpload();
@@ -884,9 +1047,6 @@
       if (addEduBtn) addEduBtn.addEventListener('click', addEducation);
       var addProjBtn = document.getElementById('addProjectBtn');
       if (addProjBtn) addProjBtn.addEventListener('click', addProject);
-      var logoutBtn = document.getElementById('logoutBtn');
-      if (logoutBtn) logoutBtn.addEventListener('click', function(e) { e.preventDefault();
-      sessionStorage.removeItem('resume_admin_logged_in'); window.location.href = 'admin-login.html'; });
     }
 
     function scrollToSection(id) {
