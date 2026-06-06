@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Work Summary Report</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <style>
         * {
@@ -300,125 +299,6 @@
         .header-left p {
             font-size: 22px;
             color: #3f4d7a;
-        }
-
-        /* ===== DOWNLOAD PDF BUTTON ===== */
-
-        .download-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
-            padding: 16px 32px;
-            background: linear-gradient(135deg, #2a1147, #4b3091, #7b4fcf);
-            color: white;
-            border: none;
-            border-radius: 14px;
-            font-size: 18px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.3s ease;
-            box-shadow: 0 4px 20px rgba(123, 79, 207, 0.3);
-            white-space: nowrap;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .download-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 30px rgba(123, 79, 207, 0.45);
-        }
-
-        .download-btn:active {
-            transform: translateY(-1px);
-        }
-
-        .download-btn i {
-            font-size: 22px;
-            transition: transform 0.3s ease;
-        }
-
-        .download-btn:hover i {
-            transform: translateY(2px);
-        }
-
-        .download-btn.loading {
-            pointer-events: none;
-            opacity: 0.85;
-        }
-
-        .download-btn.loading i {
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        /* ===== PDF LOADING OVERLAY ===== */
-
-        .pdf-overlay {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(4px);
-            z-index: 9999;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .pdf-overlay.active {
-            display: flex;
-        }
-
-        .pdf-overlay-content {
-            background: white;
-            border-radius: 24px;
-            padding: 50px 60px;
-            text-align: center;
-            max-width: 420px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
-        }
-
-        .pdf-overlay-content .spinner {
-            width: 60px;
-            height: 60px;
-            border: 5px solid #ede6ff;
-            border-top-color: #7b4fcf;
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-            margin: 0 auto 25px;
-        }
-
-        .pdf-overlay-content h3 {
-            font-size: 24px;
-            font-weight: 700;
-            color: #091248;
-            margin-bottom: 10px;
-        }
-
-        .pdf-overlay-content p {
-            font-size: 16px;
-            color: #3f4d7a;
-            line-height: 1.6;
-        }
-
-        .pdf-overlay-content .progress-bar {
-            width: 100%;
-            height: 6px;
-            background: #ede6ff;
-            border-radius: 3px;
-            margin-top: 25px;
-            overflow: hidden;
-        }
-
-        .pdf-overlay-content .progress-bar-fill {
-            height: 100%;
-            width: 0%;
-            background: linear-gradient(90deg, #7b4fcf, #4b3091);
-            border-radius: 3px;
-            transition: width 0.3s ease;
         }
 
         .divider {
@@ -947,7 +827,9 @@
     <div class="report-container">
 
         <div class="header animate-on-scroll fade-in-up">
-            <h1>WORK SUMMARY REPORT</h1>
+            <div class="header-left">
+                <h1>WORK SUMMARY REPORT</h1>
+            </div>
         </div>
 
         <div class="divider animate-on-scroll scale-in delay-1"></div>
