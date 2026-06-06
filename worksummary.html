@@ -910,140 +910,6 @@
         }
 
         .ayuhouz-last-dot:hover {
-            box-shadow: 0 0 20px rgba(46, 185, 77, 0.5) !important;
-        }
-
-        /* ===== SSM THEME OVERRIDES ===== */
-
-        /* SSM divider */
-        .ssm-divider {
-            background: linear-gradient(90deg, #dce1e8, #4a6274, #dce1e8) !important;
-        }
-
-        /* SSM icon boxes */
-        .ssm-card .icon-box {
-            background: #dce1e8 !important;
-        }
-
-        .ssm-card:hover .icon-box {
-            background: #b8c4d0 !important;
-            transform: scale(1.1) rotate(-5deg);
-        }
-
-        /* SSM list items hover */
-        .ssm-card li:hover {
-            color: #4a6274 !important;
-        }
-
-        /* SSM metric hover */
-        .ssm-metric:hover {
-            border-color: #4a6274 !important;
-            box-shadow: 0 8px 25px rgba(74, 98, 116, 0.12) !important;
-        }
-
-        /* SSM metric number gradient */
-        .ssm-metric .metric-number {
-            background: linear-gradient(135deg, #2c3e50, #4a6274) !important;
-            -webkit-background-clip: text !important;
-            -webkit-text-fill-color: transparent !important;
-            background-clip: text !important;
-        }
-
-        /* SSM dot hover */
-        .ssm-dot:hover {
-            box-shadow: 0 0 20px rgba(74, 98, 116, 0.5) !important;
-        }
-
-        /* SSM last dot (Completed) */
-        .ssm-last-dot {
-            background: #2eb94d !important;
-        }
-
-        .ssm-last-dot:hover {
-            box-shadow: 0 0 20px rgba(46, 185, 77, 0.5) !important;
-        }
-
-        /* ===== PRINT ===== */
-
-        @media print {
-            body {
-                background: white;
-                padding: 0;
-            }
-
-            .card,
-            .metrics,
-            .status-card,
-            .achievement,
-            .timeline {
-                break-inside: avoid;
-            }
-
-            .animate-on-scroll {
-                opacity: 1 !important;
-                animation: none !important;
-            }
-
-            .download-btn,
-            .pdf-overlay {
-                display: none !important;
-            }
-        }
-
-        /* ===== RESPONSIVE ===== */
-
-        @media (max-width:1024px) {
-            .hero {
-                flex-direction: column;
-                text-align: center;
-                padding: 30px;
-            }
-
-            .hero-left {
-                width: 100%;
-            }
-
-            .project-no {
-                margin: 0 auto 25px;
-            }
-
-            .project-desc {
-                margin: 0 auto;
-            }
-
-            .hero-right {
-                margin-top: 30px;
-            }
-
-            .grid-3 {
-                grid-template-columns: 1fr;
-            }
-
-            .bottom-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .metric-list {
-                grid-template-columns: repeat(3, 1fr);
-            }
-
-            .header {
-                flex-direction: column;
-            }
-        }
-
-        @media (max-width:600px) {
-            body {
-                padding: 15px;
-            }
-
-            .header-left h1 {
-                font-size: 32px;
-            }
-
-            .project-title {
-                font-size: 36px;
-            }
 
             .project-desc {
                 font-size: 18px;
@@ -1072,35 +938,16 @@
             .timeline-line {
                 display: none;
             }
-
-            .download-btn {
-                width: 100%;
-                justify-content: center;
-            }
         }
     </style>
 </head>
 
 <body>
 
-    <!-- ===== PDF LOADING OVERLAY ===== -->
-    <div class="pdf-overlay" id="pdfOverlay">
-        <div class="pdf-overlay-content">
-            <div class="spinner"></div>
-            <h3>Generating PDF...</h3>
-            <p>Please wait while we prepare your Work Summary Report for download.</p>
-            <div class="progress-bar">
-                <div class="progress-bar-fill" id="progressFill"></div>
-            </div>
-        </div>
-    </div>
-
-    <div class="report-container" id="reportContent">
+    <div class="report-container">
 
         <div class="header animate-on-scroll fade-in-up">
-            <div class="header-left">
-                <h1>WORK SUMMARY REPORT</h1>
-            </div>
+            <h1>WORK SUMMARY REPORT</h1>
         </div>
 
         <div class="divider animate-on-scroll scale-in delay-1"></div>
@@ -1169,6 +1016,164 @@
                 <ul>
                     <li><strong>Dev Mode Toggle</strong> — Floating button to disable external API connections for
                         testing</li>
+                    <li><strong>Mock Response System</strong> — JSON mock files for offline development</li>
+                    <li><strong>Pull-to-Refresh Dashboard</strong> — Real API data with pull-to-refresh and FE-computed
+                        stats</li>
+                    <li><strong>Pumping Chart</strong> — Visual chart for pumping sessions</li>
+                    <li><strong>Local Notifications</strong> — Pump session alerts, milk log reminders, BLE device
+                        notifications</li>
+                    <li><strong>Silent Re-authentication</strong> — Auto-login with token refresh and secure credential
+                        storage</li>
+                    <li><strong>App Launcher Icon</strong> — Custom app icon</li>
+                    <li><strong>Email Verification UI</strong> — Verification dialog on profile page</li>
+                    <li><strong>Forgot Password UI</strong> — Complete forgot/reset password flow</li>
+                    <li><strong>2-Step Registration</strong> — Profile step + Account step</li>
+                    <li><strong>Rhythm CRUD from App</strong> — Create, edit, delete custom rhythms</li>
+                    <li><strong>Session Sync</strong> — Sync/unsync pump session to cloud</li>
+                    <li><strong>Heating Controls</strong> — Suction, speed, heating level adjustments</li>
+                    <li><strong>Hold-to-Stop Animation</strong> — Custom button animation for stopping sessions</li>
+                    <li><strong>Smooth Animations</strong> — Screen transitions and UI animations</li>
+                    <li><strong>Responsive Layout</strong> — Improved responsive app layout</li>
+                </ul>
+            </div>
+
+            <div class="card animate-on-scroll fade-in-right delay-5">
+                <div class="card-title">
+                    <div class="icon-box"><i class="fas fa-headset"></i></div>
+                    SUPPORT & MAINTENANCE
+                </div>
+
+                <ul>
+                    <li><strong>Bug Fixes</strong> — 70 commits fixing API responses, UI bugs, session timer, routing
+                        errors, build errors</li>
+                    <li><strong>Code Refactoring</strong> — Extracting components, organizing feature structure,
+                        removing unused code</li>
+                    <li><strong>Code Styling</strong> — Biome lint fixes, code formatting</li>
+                    <li><strong>Dependency Updates</strong> — Package updates, dependency fixes</li>
+                    <li><strong>Build Fixes</strong> — APK build fixes, Flutter version bumps</li>
+                    <li><strong>Deployment Scripts</strong> — Release scripts, staging deployment fixes</li>
+                    <li><strong>Docker/Nginx Config</strong> — Docker Compose updates, Nginx configuration</li>
+                    <li><strong>Database Migrations</strong> — 3 migration files, seed data updates</li>
+                    <li><strong>Testing</strong> — Integration tests for Rhythms, Sessions, Milk Logs</li>
+                    <li><strong>Documentation</strong> — README updates, API spec, work logs</li>
+                    <li><strong>Git Hooks</strong> — Pre-push hook for auto-bumping Flutter version</li>
+                    <li><strong>Merge Management</strong> — ~100+ merge commits across branches</li>
+                </ul>
+            </div>
+
+        </div>
+
+        <div class="bottom-grid">
+
+            <div class="metrics animate-on-scroll slide-in-bottom delay-5">
+                <div class="section-title">SUMMARY METRICS</div>
+
+                <div class="metric-list">
+
+                    <div class="metric">
+                        <div class="metric-number" data-target="301">0</div>
+                        <div class="metric-label">Total Commits</div>
+                    </div>
+
+                    <div class="metric">
+                        <div class="metric-number" data-target="70">0</div>
+                        <div class="metric-label">Bug Fixes</div>
+                    </div>
+
+                    <div class="metric">
+                        <div class="metric-number" data-target="71">0</div>
+                        <div class="metric-label">Features/Enhancements</div>
+                    </div>
+
+                    <div class="metric">
+                        <div class="metric-number" data-target="119">0</div>
+                        <div class="metric-label">Other (refactor, chore, etc.)</div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="status-card animate-on-scroll slide-in-bottom delay-6">
+                <div class="section-title">STATUS</div>
+
+                <div class="status-box">
+                    <i class="fas fa-circle"
+                        style="color:#1d8c3d;font-size:14px;vertical-align:middle;margin-right:8px;"></i> Active
+                    Development
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="timeline animate-on-scroll fade-in-up delay-7">
+
+            <div class="section-title">
+                PROJECT TIMELINE (MAY 2026 - PRESENT)
+            </div>
+
+            <div class="timeline-line"></div>
+
+            <div class="timeline-points">
+
+                <div class="point animate-on-scroll fade-in-up delay-3">
+                    <div class="dot"></div>
+                    <h4>MAY 6</h4>
+                    <p>Project Kickoff</p>
+                </div>
+
+                <div class="point animate-on-scroll fade-in-up delay-4">
+                    <div class="dot"></div>
+                    <h4>MAY 2026</h4>
+                    <p>Core Development</p>
+                </div>
+
+                <div class="point animate-on-scroll fade-in-up delay-5">
+                    <div class="dot"></div>
+                    <h4>MAY 2026</h4>
+                    <p>Feature Development</p>
+                </div>
+
+                <div class="point animate-on-scroll fade-in-up delay-6">
+                    <div class="dot"></div>
+                    <h4>MAY 2026</h4>
+                    <p>Testing & Bug Fixing</p>
+                </div>
+
+                <div class="point animate-on-scroll fade-in-up delay-7">
+                    <div class="dot"></div>
+                    <h4>ONGOING</h4>
+                    <p>Active Development</p>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- ===== PROJECT 2: TORRFIRE ===== -->
+
+        <div class="divider torrfire-divider animate-on-scroll scale-in delay-1" style="margin-top:40px;"></div>
+
+        <div class="hero animate-on-scroll fade-in-up delay-2"
+            style="background:linear-gradient(135deg,#c95a1a,#e87b42,#f58a52);">
+
+            <div class="hero-left">
+                <div class="project-no">2.</div>
+
+                <div class="project-title">TORRFIRE</div>
+
+                <div class="project-desc">
+                    TorrFire is an industrial safety asset management system for inspection, maintenance, and equipment tracking with Odoo and mobile app.
+                </div>
+            </div>
+
+            <div class="hero-right">
+
+                <div class="phone"
+                    style="width:280px;height:auto;border:none;background:transparent;border-radius:14px;box-shadow:0 10px 40px rgba(0,0,0,.35);">
+                    <img src="images/torrfire-system.png" alt="Torrfire System Dashboard" style="border-radius:14px;">
+                </div>
+
                 <div class="phone">
                     <img src="images/torrfire-app.png" alt="Torrfire App">
                 </div>
